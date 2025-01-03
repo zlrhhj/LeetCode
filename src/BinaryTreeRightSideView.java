@@ -3,7 +3,7 @@ import com.sun.source.tree.Tree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeNode{
+class TreeNode{
     int val;
     TreeNode left;
     TreeNode right;
@@ -28,7 +28,7 @@ public class BinaryTreeRightSideView {
     }
     public void helper(TreeNode node, int level) {
        if(result.size() == level) {
-           rsult.add(node.val);
+           result.add(node.val);
        }
        if(node.right != null) {
            helper(node.right, level + 1);
