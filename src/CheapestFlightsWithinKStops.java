@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class CheapestFlightsWithinKStops {
     /* Attempt #1  time limie exceeded*/
     private int minCost = Integer.MAX_VALUE;
@@ -26,5 +30,31 @@ public class CheapestFlightsWithinKStops {
         int[] path = new int[n];
         helper(connections, n, src, dst, k, 0, path);
         return minCost == Integer.MAX_VALUE ? -1 : minCost;
+    }
+    public int findCheapestPrice2(int n, int[][] flights, int src, int dst, int k) {
+        int[][] connections = new int[n][n];
+        for(int[] f : flights) {
+            connections[f[0]][f[1]] = f[2];
+        }
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{src, 0 });
+
+        int[] costs = new int[n];
+        Arrays.fill(costs, Integer.MAX_VALUE);
+        int stops = 0;
+
+        while(stops <= k && !queue.isEmpty()) {
+            int[] p = queue.remove();
+            int curSrc = p[0];
+            int cost = p[1];
+            for(int i = 0; i < n; i++) {
+                if(connections[curSrc][i] > 0 && costs[i] > cost + connections[curSrc][i]) {
+                    costs[i] = cost + connections[curSrc][i];
+                    queue.add(new int[]{i,  cost + connections[curSrc][i]});
+                }
+            }
+            stops++;
+        }
+        return costs[dst] == Integer.MAX_VALUE ? -1 : costs[dst];
     }
 }
