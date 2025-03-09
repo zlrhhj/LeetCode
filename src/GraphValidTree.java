@@ -29,4 +29,16 @@ public class GraphValidTree {
         }
         return true;
     }
+    //Attempt #2 using UnionFind
+    public boolean validTree2(int n, int[][] edges) {
+        if(edges.length != n - 1 ) return false;
+        UnionFind unionFind = new UnionFind(n);
+
+        for(int[] edge : edges){
+            int A = edge[0];
+            int B = edge[1];
+            if(!unionFind.union(A, B)) return false;
+        }
+        return true;
+    }
 }
